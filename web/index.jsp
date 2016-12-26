@@ -3,27 +3,28 @@
     Created on : Dec 25, 2016, 4:08:52 PM
     Author     : Oladeji Femi
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="voting.User" %>
+<%
+    
+    if(request.getParameter("submit") != null) {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        User aUser = new User();
+        Boolean result = aUser.login(username, password);
+        if(result){
+            response.sendRedirect("admin.jsp");
+        } else {
+            response.sendRedirect("index.jsp?q=1");
+        }
+    }
+%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>E-VOTING</title>
-        <link rel="stylesheet" href="css/materialize.min.css"/>
-        <script src="js/jquery.min.js" type="text/javascript"></script>
-        <script src="js/materialize.min.js" type="text/javascript"></script>
-    </head>
+    <%@include file="inc/head.jsp" %>
     <body style="padding: 0; margin: 0">
         <div class="container">
-            <nav>
-                <div class="nav-wrapper">
-                  <a href="#" class="brand-logo">E-VOTING</a>
-                  <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="about.html">About</a></li>
-                  </ul>
-                </div>
-            </nav>
+            <%@include file="inc/nav.jsp" %>
             <div class="row">
                 <div class="col s6">
                     <img style="width:100%" src="img/vote.jpg"/>
@@ -31,21 +32,28 @@
                 </div>
                 <div class="col s6">
                     <h2 class="center-align">LOGIN</h2>
-                    <form class="col s12">
+                    <form class="col s12" method="POST" action="index.jsp">
                         <div class="row">
                             <div class="input-field col s12">
-                              <input id="username" type="text">
+                              <input id="username" type="text" name="username">
                               <label for="username">Username/Matric Number</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                              <input id="password" type="password">
+                              <input id="password" type="password" name="password">
                               <label for="password">Password</label>
                             </div>
                         </div>
+                        <% if(request.getParameter("q") != null) { %>
                         <div class="row">
-                            <button class="btn waves-effect waves-light" type="submit" name="action">Login</button>
+                            <div class="input-field col s12">
+                              <span>Invalid login details</span>
+                            </div>
+                        </div>
+                        <% } %>
+                        <div class="row">
+                            <input class="btn waves-effect waves-light" name="submit" type="submit" name="action" value="LOGIN">
                         </div>
                     </form>
                 </div>
