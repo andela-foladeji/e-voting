@@ -13,6 +13,7 @@
         User aUser = new User();
         Boolean result = aUser.login(username, password);
         if(result){
+            session.setAttribute("user", username);
             response.sendRedirect("admin.jsp");
         } else {
             response.sendRedirect("index.jsp?q=1");
