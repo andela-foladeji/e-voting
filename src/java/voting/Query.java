@@ -10,6 +10,7 @@ package voting;
  * @author Oladeji Femi
  */
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -38,11 +39,56 @@ public class Query {
         try {
             DBCon conn = new DBCon();
             conn.doConnection();
-            Statement statement = conn.connection.createStatement();
-            res = statement.executeQuery(sqlQuery);
+            PreparedStatement statement = conn.connection.prepareStatement(sqlQuery);
+            res = statement.executeQuery();
+//            ResultSet generatedKeys = statement.getGeneratedKeys();
+//            if (generatedKeys.next()) {
+//                System.out.println(generatedKeys.getLong("id"));
+//            }
         } catch(SQLException e) {
             System.out.println(e);
         }
         return res;
+    }
+    
+    public static int runQuery2(String sqlQuery) {
+        int affectedRows, rowId = 0;
+        try {
+            DBCon conn = new DBCon();
+            conn.doConnection();
+            PreparedStatement statement = conn.connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
+            affectedRows = statement.executeUpdate();
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                rowId = generatedKeys.getInt(1);
+            }
+        } catch(SQLException e) {
+            System.out.println(e);
+            rowId = -1;
+        }
+        return rowId;
+    }
+    
+    public static int insert(String tableName, HashMap<String, String> parameters) throws SQLException {
+        String sqlQuery = "INSERT INTO " + tableName + " ( ";
+        int counter = 0;
+        for(String key : parameters.keySet()) {
+            if (counter > 0) {
+                sqlQuery += ", ";
+            }
+            sqlQuery += key;
+            counter++;
+        }
+        sqlQuery += " ) VALUES(";
+        counter = 0;
+        for(String key : parameters.keySet()) {
+            if (counter > 0) {
+                sqlQuery += ", ";
+            }
+            sqlQuery += "'"+parameters.get(key)+"'";
+            counter++;
+        }
+        sqlQuery += " )";
+        return Query.runQuery2(sqlQuery);
     }
 }

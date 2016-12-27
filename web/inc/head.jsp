@@ -21,6 +21,7 @@
 		$.ajax({
                     url: form.attr('action'),
                     data: {election: $("#election").val(), description: $("#description").val(), session: $("#session").val()},
+                    method: "POST",
                     beforeSend: function(){
 			form_status.html('<div class="progress"><div class="indeterminate"></div></div>').fadeIn();
                     }

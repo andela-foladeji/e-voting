@@ -24,6 +24,7 @@
                     </p>
                 </div>
                 <div class="col s12 m6 l6">
+                    <h3 class="center-align">CREATE ELECTION</h3>
                     <form class="col s12" action="processor/create-election.jsp" id="create-election">
                         <div class="row">
                             <div class="input-field col s12">
