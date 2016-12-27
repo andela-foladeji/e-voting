@@ -41,10 +41,6 @@ public class Query {
             conn.doConnection();
             PreparedStatement statement = conn.connection.prepareStatement(sqlQuery);
             res = statement.executeQuery();
-//            ResultSet generatedKeys = statement.getGeneratedKeys();
-//            if (generatedKeys.next()) {
-//                System.out.println(generatedKeys.getLong("id"));
-//            }
         } catch(SQLException e) {
             System.out.println(e);
         }

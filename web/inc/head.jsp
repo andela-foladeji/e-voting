@@ -17,7 +17,7 @@
             var form = $('#create-election');
             form.submit((e) => {
                 e.preventDefault();
-                var form_status = $('<div class="form_status"></div>');
+                var form_status = $('.form_status');
 		$.ajax({
                     url: form.attr('action'),
                     data: {election: $("#election").val(), description: $("#description").val(), session: $("#session").val()},
@@ -26,10 +26,19 @@
 			form_status.html('<div class="progress"><div class="indeterminate"></div></div>').fadeIn();
                     }
 		}).done(function(data){
-                    console.log(data);
-                    form_status.html('<p class="text-success">Election Successfully created</p>').delay(5000).fadeOut();
+                    const response = JSON.parse(data);
+                    console.log(response);
+                    if(response.status == 1) {
+                        form_status.html('<p class="teal-text text-darken-2">'+response.message+'</p>').delay(2000).fadeOut();
+                        setTimeout(() => {
+                            location.replace("election.jsp?q="+response.electionId);
+                        }, 2000)
+                    } else {
+                        form_status.html('<p class="red-text text-lighten-1">'+response.message+'</p>').delay(5000).fadeOut();
+                    }
+                    
 		}).error(function(){
-                    form_status.html('<p class="text-error">Please check your internet connection</p>').delay(5000).fadeOut();
+                    form_status.html('<p class="red-text text-lighten-1">Please check your internet connection</p>').delay(5000).fadeOut();
 		});
             })
         });

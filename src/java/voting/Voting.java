@@ -18,7 +18,6 @@ public class Voting {
         electionDetails.put("name", election);
         electionDetails.put("description", description);
         electionDetails.put("session", electionSession);
-        Query.insert("elections", electionDetails);
-        return 2;
+        return Query.insert("elections", electionDetails);
     }
 }
