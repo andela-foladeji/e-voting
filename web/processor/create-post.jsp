@@ -13,9 +13,9 @@
         Vote vote = new Vote();
         int resId = vote.createPost(electionId, post, desc);
         if (resId > 0) {
-            response.sendRedirect("../election.jsp");
+            response.sendRedirect("../election.jsp?q="+Base64.getEncoder().encodeToString(electionId.getBytes()));
         } else {
-            response.sendRedirect("../election.jsp?e=1");
+            response.sendRedirect("../election.jsp?e=1&q="+Base64.getEncoder().encodeToString(electionId.getBytes()));
         }
     } else {
         response.sendRedirect("../admin.jsp");

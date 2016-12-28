@@ -65,6 +65,11 @@ public class Query {
         return rowId;
     }
     
+    public static ResultSet fetchTable(String tableName) {
+        String sqlQuery = "SELECT * FROM " + tableName;
+        return Query.runQuery(sqlQuery);
+    }
+    
     public static int insert(String tableName, HashMap<String, String> parameters) throws SQLException {
         String sqlQuery = "INSERT INTO " + tableName + " ( ";
         int counter = 0;

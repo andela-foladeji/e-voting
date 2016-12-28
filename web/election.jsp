@@ -4,13 +4,16 @@
     Author     : Oladeji Femi
 --%>
 
+<%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" import="java.util.Base64, java.util.HashMap, voting.Vote"%>
-<%! String name, description, electionSession, election; %>
+<%! String name, description, electionSession, election;
+    Vote vote;
+%>
 <%
     election = new String(Base64.getDecoder().decode(request.getParameter("q")));
     int electionId = Integer.parseInt(election);
     if(electionId > 0) {
-        Vote vote = new Vote();
+        vote = new Vote();
         HashMap<String, String> electionInfo = vote.getElectionInfo(election);
         if(electionInfo == null) {
             response.sendRedirect("admin.jsp");
@@ -64,7 +67,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr></tr>
+                            <%
+                                int counter = 1;
+                                ResultSet allPosts = vote.getPosts();
+                                while(allPosts.next()) {
+                                    out.print("<tr><td>"+counter+"</td><td>"+allPosts.getString("post")+"</td><td>"+allPosts.getString("description")+"</td><td></td><td><a class='btn waves-effect waves-light' href=add-candidates.jsp?e="+allPosts.getString("id")+">Add</a></td></tr>");
+                                    counter++;
+                                }
+                            %>
                         </tbody>
                     </table>
                 </div>

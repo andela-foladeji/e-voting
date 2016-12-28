@@ -45,4 +45,8 @@ public class Vote {
         postDetails.put("election_id", electionId);
         return Query.insert("posts", postDetails);
     }
+    
+    public ResultSet getPosts() {
+        return Query.fetchTable("posts");
+    }
 }

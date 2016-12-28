@@ -27,7 +27,6 @@
                     }
 		}).done(function(data){
                     const response = JSON.parse(data);
-                    console.log(response);
                     if(response.status == 1) {
                         form_status.html('<p class="teal-text text-darken-2">'+response.message+'</p>').delay(2000).fadeOut();
                         setTimeout(() => {
