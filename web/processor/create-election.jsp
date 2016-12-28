@@ -4,7 +4,7 @@
     Author     : Oladeji Femi
 --%>
 
-<%@page import="voting.Voting, org.json.JSONObject, java.util.Base64" %>
+<%@page import="voting.Vote, org.json.JSONObject, java.util.Base64" %>
 <%
     String election = request.getParameter("election");
     String description = request.getParameter("description");
@@ -12,7 +12,7 @@
     if(election.trim() == "" || description.trim() == "" || electionSession.trim() == "") {
         out.print(new JSONObject("{\"status\": 0, \"message\": \"All fields are required\"}"));
     } else {
-        Voting vote = new Voting();
+        Vote vote = new Vote();
         int resId = vote.createElection(election, description, electionSession);
         if (resId > 0) {
             String electionId = Base64.getEncoder().encodeToString(Integer.toString(resId).getBytes());
