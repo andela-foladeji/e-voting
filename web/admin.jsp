@@ -5,11 +5,7 @@
 --%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.util.Date"%>
-<%
-    if(session.getAttribute("user") == null) {
-        response.sendRedirect("index.jsp");
-    }
-%>
+<%@include file="inc/logger.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

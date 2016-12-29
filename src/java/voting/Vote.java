@@ -61,4 +61,10 @@ public class Vote {
         }
         return Query.insert("candidates", candidateDetails);
     }
+    
+    public ResultSet getCandidatesForPost(String postId) {
+        HashMap<String, String> post = new HashMap<String, String>();
+        post.put("post_id", postId);
+        return Query.fetchData("candidates", post);
+    }
 }

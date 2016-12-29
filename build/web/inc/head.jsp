@@ -63,7 +63,6 @@
 			form_status.html('<div class="progress"><div class="indeterminate"></div></div>').fadeIn();
                     }
 		}).done(function(data){
-                    console.log(data);
                     const response = JSON.parse(data);
                     if(response.status == 1) {
                         form_status.html('<p class="teal-text text-darken-2">'+response.message+'</p>').delay(2000).fadeOut();

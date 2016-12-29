@@ -71,7 +71,14 @@
                                 int counter = 1;
                                 ResultSet allPosts = vote.getPosts();
                                 while(allPosts.next()) {
-                                    out.print("<tr><td>"+counter+"</td><td>"+allPosts.getString("post")+"</td><td>"+allPosts.getString("description")+"</td><td></td><td><a href=#candidate-modal class='btn waves-effect waves-light add-candidate' id="+allPosts.getString("id")+">Add</a></td></tr>");
+                                    ResultSet candidates = vote.getCandidatesForPost(allPosts.getString("id"));
+                                    String candidatesText = "<table>";
+                                    while(candidates.next()) {
+//                                        out.println("kldjf");
+                                        candidatesText += "<tr><td>"+candidates.getString("name")+"("+candidates.getString("nickname")+")</td></tr>";
+                                    }
+                                    candidatesText += "</table>";
+                                    out.print("<tr><td>"+counter+"</td><td>"+allPosts.getString("post")+"</td><td>"+allPosts.getString("description")+"</td><td>"+candidatesText+"</td><td><a href=#candidate-modal class='btn waves-effect waves-light add-candidate' id="+allPosts.getString("id")+">Add</a></td></tr>");
                                     counter++;
                                 }
                             %>
