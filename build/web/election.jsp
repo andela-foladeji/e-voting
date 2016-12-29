@@ -71,7 +71,7 @@
                                 int counter = 1;
                                 ResultSet allPosts = vote.getPosts();
                                 while(allPosts.next()) {
-                                    out.print("<tr><td>"+counter+"</td><td>"+allPosts.getString("post")+"</td><td>"+allPosts.getString("description")+"</td><td></td><td><a class='btn waves-effect waves-light' href=add-candidates.jsp?e="+allPosts.getString("id")+">Add</a></td></tr>");
+                                    out.print("<tr><td>"+counter+"</td><td>"+allPosts.getString("post")+"</td><td>"+allPosts.getString("description")+"</td><td></td><td><a href=#candidate-modal class='btn waves-effect waves-light add-candidate' id="+allPosts.getString("id")+">Add</a></td></tr>");
                                     counter++;
                                 }
                             %>
@@ -84,6 +84,38 @@
                     <p class="center-align" style="color:#fff; line-height:50px;">Copyright 2016 <a style="color: yellow" href="https://github.com/andela-foladeji">femidotexe</a></p>
                 </div>
             </footer>
+        </div>
+
+        <!-- Modal Structure -->
+        <div id="candidate-modal" class="modal">
+          <div class="modal-content row">
+            <h4 class="center-align">Add Candidate for the post: <b class="the-post"></b></h4>
+            <form id="add-candidate" action="processor/add-candidate.jsp" class="col s12 m10 l8 offset-m1 offset-l2">
+                <div class="input-field col s12 m6 l6">
+                    <input id="candidate" type="text" name="post">
+                    <label for="candidate">Candidate Name</label>
+                </div>
+                <div class="input-field col s12 m6 l6">
+                    <input id="nickname" type="text" name="nickname">
+                    <label for="nickname">Nickname</label>
+                </div>
+                <div class="input-field col s12 m12 l12">
+                    <textarea id="profile" name="profile" class="materialize-textarea"></textarea>
+                    <label for="profile">Candidate's Profile</label>
+                </div>
+                <div class="input-field col s12 m12 l12">
+                    <textarea id="manifesto" name="manifesto" class="materialize-textarea"></textarea>
+                    <label for="manifesto">Candidate's Manifesto</label>
+                </div>
+                <div class="row">
+                    <div class="form_status col s12"></div>
+                </div>
+                <div class="input-field col s12 m2 l2">
+                    <input type="hidden" name="postid" value="" id="postid"/>
+                    <input type="submit" value="Add Candidate" name="add_candidate" class=" btn waves-effect waves-light"/>
+                </div>
+            </form>
+          </div>
         </div>
     </body>
 </html>

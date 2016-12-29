@@ -49,4 +49,16 @@ public class Vote {
     public ResultSet getPosts() {
         return Query.fetchTable("posts");
     }
+    
+    public int addCandidate(String candidateName, String profile, String manifesto, String nickname, String postId) throws SQLException {
+        HashMap<String, String> candidateDetails = new HashMap<String, String>();
+        candidateDetails.put("name", candidateName);
+        candidateDetails.put("profile", profile);
+        candidateDetails.put("manifesto", manifesto);
+        candidateDetails.put("post_id", postId);
+        if(nickname != null) {
+            candidateDetails.put("nickname", nickname);
+        }
+        return Query.insert("candidates", candidateDetails);
+    }
 }
