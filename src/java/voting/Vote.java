@@ -81,4 +81,12 @@ public class Vote {
         updates.put("status", status);
         return Query.update("elections", whereClause, updates);
     }
+    
+    public int changePublishStatus(String status, String electionId) {
+        HashMap<String, String> whereClause = new HashMap<String, String>();
+        HashMap<String, String> updates = new HashMap<String, String>();
+        whereClause.put("id", electionId);
+        updates.put("publishstatus", status);
+        return Query.update("elections", whereClause, updates);
+    }
 }

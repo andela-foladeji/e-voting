@@ -78,17 +78,22 @@
 		});
             })
             
-            $('.switch-status').change(function() {
+            $('.change').change(function() {
                let status = $(this).prop("checked");
-               let electionId = $(this).parents("tr").attr("id");
-               if (status === true) {
+               if(status === true) {
                    status = 1;
                } else {
                    status = 0;
                }
+               let electionId = $(this).parents("tr").attr("id");
+               const data = {status, electionId};
+               data.type = "status"
+               if($(this).hasClass("switch-publish")) {
+                   data.type = "publish";
+               }
                $.ajax({
                    url: 'processor/change-status.jsp',
-                   data: {status, electionId},
+                   data,
                    method: "POST",
                    success: function(data) {
                        console.log(data);

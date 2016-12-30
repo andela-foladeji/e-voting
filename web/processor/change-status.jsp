@@ -8,7 +8,13 @@
 <%
     String status = request.getParameter("status");
     String electionId = request.getParameter("electionId");
+    String type = request.getParameter("type");
     Vote vote = new Vote();
-    int resId = vote.changeElectionStatus(status, electionId);
+    if(type.equals("publish")) {
+        vote.changePublishStatus(status, electionId);
+    } else {
+        vote.changeElectionStatus(status, electionId);
+    }
+    
     out.print(new JSONObject("{\"status\": 1, \"message\": \"Status changed\"}"));
 %>

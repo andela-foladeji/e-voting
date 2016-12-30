@@ -112,7 +112,6 @@ public class Query {
             sqlQuery += key + " = '" + whereClause.get(key) +"' ";
             counter++;
         }
-        System.out.println(sqlQuery);
         return Query.runQuery2(sqlQuery);
     }
 }
