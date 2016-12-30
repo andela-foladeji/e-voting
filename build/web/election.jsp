@@ -3,7 +3,7 @@
     Created on : Dec 28, 2016, 12:40:04 AM
     Author     : Oladeji Femi
 --%>
-
+<%@include file="inc/logger.jsp" %>
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" import="java.util.Base64, java.util.HashMap, voting.Vote"%>
 <%! String name, description, electionSession, election;
@@ -69,12 +69,11 @@
                         <tbody>
                             <%
                                 int counter = 1;
-                                ResultSet allPosts = vote.getPosts();
+                                ResultSet allPosts = vote.getPosts(election);
                                 while(allPosts.next()) {
                                     ResultSet candidates = vote.getCandidatesForPost(allPosts.getString("id"));
                                     String candidatesText = "<table>";
                                     while(candidates.next()) {
-//                                        out.println("kldjf");
                                         candidatesText += "<tr><td>"+candidates.getString("name")+"("+candidates.getString("nickname")+")</td></tr>";
                                     }
                                     candidatesText += "</table>";

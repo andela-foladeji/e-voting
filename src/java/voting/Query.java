@@ -65,8 +65,8 @@ public class Query {
         return rowId;
     }
     
-    public static ResultSet fetchTable(String tableName) {
-        String sqlQuery = "SELECT * FROM " + tableName;
+    public static ResultSet fetchTable(String tableName, String order) {
+        String sqlQuery = "SELECT * FROM " + tableName + " ORDER BY id "+order;
         return Query.runQuery(sqlQuery);
     }
     

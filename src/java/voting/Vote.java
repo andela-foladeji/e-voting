@@ -46,8 +46,10 @@ public class Vote {
         return Query.insert("posts", postDetails);
     }
     
-    public ResultSet getPosts() {
-        return Query.fetchTable("posts");
+    public ResultSet getPosts(String electionId) {
+        HashMap<String, String> details = new HashMap<String, String>();
+        details.put("election_id", electionId);
+        return Query.fetchData("posts", details);
     }
     
     public int addCandidate(String candidateName, String profile, String manifesto, String nickname, String postId) throws SQLException {
@@ -66,5 +68,9 @@ public class Vote {
         HashMap<String, String> post = new HashMap<String, String>();
         post.put("post_id", postId);
         return Query.fetchData("candidates", post);
+    }
+    
+    public ResultSet getElections() {
+        return Query.fetchTable("elections", "DESC");
     }
 }
