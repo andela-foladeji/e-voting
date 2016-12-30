@@ -73,4 +73,12 @@ public class Vote {
     public ResultSet getElections() {
         return Query.fetchTable("elections", "DESC");
     }
+    
+    public int changeElectionStatus(String status, String electionId) {
+        HashMap<String, String> whereClause = new HashMap<String, String>();
+        HashMap<String, String> updates = new HashMap<String, String>();
+        whereClause.put("id", electionId);
+        updates.put("status", status);
+        return Query.update("elections", whereClause, updates);
+    }
 }

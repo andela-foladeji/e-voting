@@ -36,8 +36,13 @@
                                 int counter = 1;
                                 ResultSet elections = vote.getElections();
                                 while(elections.next()) {
+                                    String isChecked = "checked";
+                                    if(elections.getInt("status") == 0) {
+                                        isChecked = "";
+                                    }
+                                    String activeSwitch = "<div class=switch><label>Off<input class='switch-status' "+isChecked+" type=checkbox><span class=lever></span>On</label></div>";
                                     String electionId = Base64.getEncoder().encodeToString(elections.getString("id").getBytes());
-                                    out.print("<tr><td>"+counter+"</td><td>"+elections.getString("name")+"</td><td>"+elections.getString("description")+"</td><td>"+elections.getString("session")+"</td><td><a href='election.jsp?q='"+electionId+" class=btn waves-effect waves-light>ADD</a></td></tr>");
+                                    out.print("<tr id="+elections.getString("id")+"><td>"+counter+"</td><td>"+elections.getString("name")+"</td><td>"+elections.getString("description")+"</td><td>"+elections.getString("session")+"</td><td><a href='election.jsp?q='"+electionId+" class=btn waves-effect waves-light>ADD</a></td><td>"+activeSwitch+"</td></tr>");
                                     counter++;
                                 }
                             %>

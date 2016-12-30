@@ -92,4 +92,27 @@ public class Query {
         sqlQuery += " )";
         return Query.runQuery2(sqlQuery);
     }
+    
+    public static int update(String tableName, HashMap<String, String> whereClause, HashMap<String, String> updates) {
+        String sqlQuery = "UPDATE " + tableName + " SET ";
+        int counter = 0;
+        for(String key : updates.keySet()) {
+            if (counter > 0) {
+                sqlQuery += ", ";
+            }
+            sqlQuery += key + " = '" + updates.get(key) +"' ";
+            counter++;
+        }
+        sqlQuery += " WHERE ";
+        counter = 0;
+        for(String key : whereClause.keySet()) {
+            if (counter > 0) {
+                sqlQuery += ", ";
+            }
+            sqlQuery += key + " = '" + whereClause.get(key) +"' ";
+            counter++;
+        }
+        System.out.println(sqlQuery);
+        return Query.runQuery2(sqlQuery);
+    }
 }
