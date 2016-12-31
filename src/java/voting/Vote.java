@@ -89,4 +89,9 @@ public class Vote {
         updates.put("publishstatus", status);
         return Query.update("elections", whereClause, updates);
     }
+    
+    public ResultSet getAssignedElections(String voterId) {
+        String sqlQuery = "SELECT *, elections.id AS electionId FROM elections, voters, voters_assignment WHERE voters.id = '"+voterId+"' AND voters_assignment.voters_id = voters.id AND voters_assignment.elections_id = elections.id AND voters_assignment.elections_id AND elections.id AND elections.status = 1";
+        return Query.runQuery(sqlQuery);
+    }
 }

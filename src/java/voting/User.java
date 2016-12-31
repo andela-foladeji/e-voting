@@ -30,4 +30,20 @@ public class User {
         }
         return false;
     }
+    
+    public int votersLogin(String username, String password) {
+        HashMap<String, String> loginDetails = new HashMap<String, String>();
+        loginDetails.put("username", username);
+        loginDetails.put("password", password);
+        ResultSet res = Query.fetchData("voters", loginDetails);
+        try {
+            while (res.next()) {
+                return res.getInt("id");
+            }
+        } catch(SQLException e) {
+            System.out.println(e);
+            return 0;
+        }
+        return 0;
+    }
 }
