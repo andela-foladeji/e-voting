@@ -43,7 +43,7 @@
                                         isChecked = "";
                                     }
                                     String isPublished = "checked";
-                                    String viewResult = "<a class=btn href='view-result.php?q='"+electionId+">View Result</a>";
+                                    String viewResult = "<a class=btn href=view-result.jsp?q="+electionId+">View Result</a>";
                                     if(elections.getInt("publishstatus") == 0) {
                                         isPublished = "";
                                         viewResult = "";

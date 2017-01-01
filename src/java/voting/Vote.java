@@ -111,4 +111,9 @@ public class Vote {
         whereClause.put("elections_id", electionId);
         return Query.update("voters_assignment", whereClause, newStatus);
     }
+    
+    public ResultSet getResultForCandidate(String candidateId) {
+        String sqlQuery = "SELECT COUNT(votes.id) AS totalvotes FROM votes WHERE candidate_id = " + candidateId;
+        return Query.runQuery(sqlQuery);
+    }
 }
