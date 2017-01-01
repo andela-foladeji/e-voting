@@ -16,7 +16,7 @@
         <div class="container">
             <%@include file="inc/adminnav.jsp" %>
             <div class="row">
-                <div class="col s12 m10 l10 offset-m1 offset-l1">
+                <div class="col s12 m12 l12">
                     <h4 class="center-align">View All Elections</h4>
                     <p>Lists of all created elections can be seen below, you can create posts and subsequently add candidates to the post. You can also activate an election for voting, view results and so on.</p>
                     <table class="striped">
@@ -28,6 +28,7 @@
                                 <th data-field="desc">SESSION</th>
                                 <th data-field="candidates">ADD POSTS</th>
                                 <th data-field="add">ACTIVATE/DEACTIVATE</th>
+                                <th data-field="add">PUBLISH RESULT</th>
                                 <th data-field="add">VIEW RESULTS</th>
                             </tr>
                         </thead>
@@ -36,8 +37,20 @@
                                 int counter = 1;
                                 ResultSet elections = vote.getElections();
                                 while(elections.next()) {
+                                    String isChecked = "checked";
                                     String electionId = Base64.getEncoder().encodeToString(elections.getString("id").getBytes());
-                                    out.print("<tr><td>"+counter+"</td><td>"+elections.getString("name")+"</td><td>"+elections.getString("description")+"</td><td>"+elections.getString("session")+"</td><td><a href='election.jsp?q='"+electionId+" class=btn waves-effect waves-light>ADD</a></td></tr>");
+                                    if(elections.getInt("status") == 0) {
+                                        isChecked = "";
+                                    }
+                                    String isPublished = "checked";
+                                    String viewResult = "<a class=btn href=view-result.jsp?q="+electionId+">View Result</a>";
+                                    if(elections.getInt("publishstatus") == 0) {
+                                        isPublished = "";
+                                        viewResult = "";
+                                    }
+                                    String publishSwitch = "<div class=switch><label>Off<input class='switch-publish change' "+isPublished+" type=checkbox><span class=lever></span>On</label></div>";
+                                    String activeSwitch = "<div class=switch><label>Off<input class='switch-status change' "+isChecked+" type=checkbox><span class=lever></span>On</label></div>";
+                                    out.print("<tr id="+elections.getString("id")+"><td>"+counter+"</td><td>"+elections.getString("name")+"</td><td>"+elections.getString("description")+"</td><td>"+elections.getString("session")+"</td><td><a href='election.jsp?q="+electionId+"' class=btn waves-effect waves-light>ADD</a></td><td>"+activeSwitch+"</td><td>"+publishSwitch+"</td><td>"+viewResult+"</td></tr>");
                                     counter++;
                                 }
                             %>

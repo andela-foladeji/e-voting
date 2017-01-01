@@ -11,6 +11,7 @@
         <li><a href="admin.jsp">Create Election</a></li>
         <li><a href="view.jsp">View Elections</a></li>
         <li><a href="addvoters.jsp">Add Voters</a></li>
+        <li><a href="logout.jsp">Logout</a></li>
       </ul>
     </div>
 </nav>

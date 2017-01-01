@@ -16,7 +16,14 @@
             session.setAttribute("user", username);
             response.sendRedirect("admin.jsp");
         } else {
-            response.sendRedirect("index.jsp?q=1");
+            int voterId = aUser.votersLogin(username, password);
+            if (voterId > 0) {
+                session.setAttribute("voter", username);
+                session.setAttribute("voterId", voterId);
+                response.sendRedirect("vote.jsp");
+            } else {
+                response.sendRedirect("index.jsp?q=1");
+            }
         }
     }
 %>
@@ -54,7 +61,7 @@
                         </div>
                         <% } %>
                         <div class="row">
-                            <input class="btn waves-effect waves-light" name="submit" type="submit" name="action" value="LOGIN">
+                            <input class="btn waves-effect waves-light" name="submit" type="submit" value="LOGIN">
                         </div>
                     </form>
                 </div>

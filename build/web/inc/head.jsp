@@ -77,6 +77,33 @@
                     form_status.html('<p class="red-text text-lighten-1">Please check your internet connection</p>').delay(5000).fadeOut();
 		});
             })
+            
+            $('.change').change(function() {
+               let status = $(this).prop("checked");
+               if(status === true) {
+                   status = 1;
+               } else {
+                   status = 0;
+               }
+               let electionId = $(this).parents("tr").attr("id");
+               const data = {status, electionId};
+               data.type = "status"
+               if($(this).hasClass("switch-publish")) {
+                   data.type = "publish";
+               }
+               $.ajax({
+                   url: 'processor/change-status.jsp',
+                   data,
+                   method: "POST",
+                   success: function(data) {
+                       console.log(data);
+                   },
+                   error: function(e) {
+                       // This will be changed to Materialize Toast
+                       alert("Please check your internet connectivity");
+                   }
+               });
+            });
         });
     </script>
 </head>
