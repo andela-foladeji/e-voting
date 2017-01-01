@@ -46,15 +46,23 @@
                     <hr/>
                     <form action="processor/cast-vote.jsp" method="POST">
                         <%
-                            ResultSet allPosts = vote.getPosts(election);
-                            while(allPosts.next()) {
-                                out.print("<p class=center-align><b>"+allPosts.getString("post")+"</b><br/>"+allPosts.getString("description")+"</p>");
-                                ResultSet candidates = vote.getCandidatesForPost(allPosts.getString("id"));
-                                while(candidates.next()) {
-                                    out.print("<div class='row'><input type=radio name="+allPosts.getString("id")+" value="+candidates.getString("id")+" id='"+candidates.getString("id")+"' /><label for="+candidates.getString("id")+"><b>Name:</b> "+candidates.getString("name")+"<br/><b>Profile:</b> "+candidates.getString("profile")+"<br/><b>Manifesto:</b> "+candidates.getString("manifesto")+"</label></div>");
+                            ResultSet eligible = vote.getAssignedElections(session.getAttribute("voterId").toString());
+                            while(eligible.next()) {
+                                if(eligible.getInt("vote_status") == 0) {
+                                    ResultSet allPosts = vote.getPosts(election);
+                                    while(allPosts.next()) {
+                                        out.print("<p class=center-align><b>"+allPosts.getString("post")+"</b><br/>"+allPosts.getString("description")+"</p>");
+                                        ResultSet candidates = vote.getCandidatesForPost(allPosts.getString("id"));
+                                        while(candidates.next()) {
+                                            out.print("<div class='row'><input type=radio required name="+allPosts.getString("id")+" value="+candidates.getString("id")+" id='"+candidates.getString("id")+"' /><label for="+candidates.getString("id")+"><b>Name:</b> "+candidates.getString("name")+"<br/><b>Profile:</b> "+candidates.getString("profile")+"<br/><b>Manifesto:</b> "+candidates.getString("manifesto")+"</label></div>");
+                                        }
+                                        out.print("<hr/>");
+                                    }
+                                } else {
+                                    out.print("<p style='font-weight:bold' class='center-align'>You've successfuly cast your vote</p>");
                                 }
-                                out.print("<hr/>");
                             }
+                            
                         %>
                         <input type="hidden" name="electionId" value="<%= election %>"/>
                         <center><input type="submit" name="cast-vote" class="btn waves-effect waves-light" value="CAST VOTE" /></center>
