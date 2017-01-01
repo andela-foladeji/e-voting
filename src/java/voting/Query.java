@@ -107,11 +107,12 @@ public class Query {
         counter = 0;
         for(String key : whereClause.keySet()) {
             if (counter > 0) {
-                sqlQuery += ", ";
+                sqlQuery += " AND ";
             }
-            sqlQuery += key + " = '" + whereClause.get(key) +"' ";
+            sqlQuery += key + " = '" + whereClause.get(key) +"'";
             counter++;
         }
+        System.out.println(sqlQuery);
         return Query.runQuery2(sqlQuery);
     }
 }
